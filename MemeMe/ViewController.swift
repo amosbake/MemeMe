@@ -60,7 +60,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         super.viewWillAppear(animated)
         self.subscribeToKeyboardNotification()
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
-        phoneImageView.contentMode = .ScaleToFill
     }
     
     override func viewWillDisappear(animated: Bool) {
