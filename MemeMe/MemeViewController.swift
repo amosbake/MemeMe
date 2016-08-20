@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
+class MemeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
     @IBOutlet weak var bottomBar: UIToolbar!
     @IBOutlet weak var phoneImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -27,33 +27,24 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        self.view.backgroundColor = UIColor.whiteColor()
+        
         self.view.bringSubviewToFront(topText)
         self.view.bringSubviewToFront(bottomText)
         
-        /**Font Style**/
-        topText.defaultTextAttributes = memeTextAttributes
-        bottomText.defaultTextAttributes = memeTextAttributes
-        /**TextField Align**/
+        /**TextField Init**/
         initTextField(topText)
         initTextField(bottomText)
-        /**Init View**/
+        
+        /**Init Other View**/
         resetView()
         
-        /**Hide TextField Border**/
-        topText.borderStyle = UITextBorderStyle.None
-        bottomText.borderStyle = UITextBorderStyle.None
-        
-        /**textfield delegate**/
-        topText.delegate = self
-        bottomText.delegate = self
     }
     
     func initTextField(item: UITextField)  {
         item.defaultTextAttributes = memeTextAttributes
         item.delegate = self
         item.textAlignment = .Center
+        item.borderStyle = UITextBorderStyle.None
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -65,6 +56,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     override func viewWillDisappear(animated: Bool) {
         unsubscribeToKeyboardNotification()
         super.viewWillDisappear(animated)
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     @IBAction func pickImageView(sender: UIBarButtonItem) {
@@ -86,11 +81,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
     @IBAction func shareMemeView()  {
-        let controller = UIActivityViewController(activityItems: [currentMeme.memedImage], applicationActivities: nil)
+        let memeImage = generateMemedImage()
+        let controller = UIActivityViewController(activityItems: [memeImage], applicationActivities: nil)
         presentViewController(controller, animated: true, completion: nil)
         controller.completionWithItemsHandler = { (activity, success, items, error) in
             if(success){
-                self.saveMeme()
+                self.saveMeme(memeImage)
             }
             controller.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -120,8 +116,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //MARK: KeyboardNotification
     func subscribeToKeyboardNotification()  {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: "UIKeyboardWillShowNotification", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillDismiss), name: "UIKeyboardWillHideNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeViewController.keyboardWillShow), name: "UIKeyboardWillShowNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeViewController.keyboardWillDismiss), name: "UIKeyboardWillHideNotification", object: nil)
     }
     func unsubscribeToKeyboardNotification()  {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
@@ -130,11 +126,15 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //MARK: Lift && Resume View Position
     func keyboardWillShow(notification:NSNotification)  {
-        self.view.frame.origin.y = getKeyboardHeight(notification) * -1
+        if bottomText.isFirstResponder() {
+            self.view.frame.origin.y = getKeyboardHeight(notification) * -1
+        }
     }
     
     func keyboardWillDismiss(notification:NSNotification)  {
-        self.view.frame.origin.y = 0
+        if bottomText.isFirstResponder() {
+            self.view.frame.origin.y = 0
+        }
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
@@ -156,28 +156,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         return memedImage
     }
     
-    func saveMeme() {
-        let memedImage = generateMemedImage()
-        
-        currentMeme = Meme(topText: topText.text!, bottomText: bottomText.text!, rawImg: phoneImageView.image!, memeImage: memedImage )
-        
-       
+    func saveMeme(memeImage :UIImage) {
+        currentMeme = Meme(topText: topText.text!, bottomText: bottomText.text!, image: phoneImageView.image!, memedImage: memeImage )
     }
     
 }
 
-struct Meme {
-    var topText:String
-    var bottomText:String
-    var image:UIImage
-    var memedImage :UIImage
-    
-    init(topText:String = "TOP",bottomText:String = "BOTTOM",rawImg:UIImage,memeImage:UIImage){
-        self.bottomText = bottomText
-        self.topText = topText
-        self.image = rawImg
-        self.memedImage = memeImage
-    }
-}
 
 
