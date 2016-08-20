@@ -16,9 +16,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var bottomText: UITextField!
     let memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
-        NSForegroundColorAttributeName : UIColor.blackColor(),
+        NSForegroundColorAttributeName : UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSStrokeWidthAttributeName : Float(5)
+        NSStrokeWidthAttributeName : Float(-4)
     ]
     
     var currentMeme: Meme!
@@ -36,10 +36,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         topText.defaultTextAttributes = memeTextAttributes
         bottomText.defaultTextAttributes = memeTextAttributes
         /**TextField Align**/
-        topText.contentVerticalAlignment = .Center
-        topText.textAlignment = .Center
-        bottomText.contentVerticalAlignment = .Center
-        bottomText.textAlignment = .Center
+        initTextField(topText)
+        initTextField(bottomText)
         /**Init View**/
         resetView()
         
@@ -50,6 +48,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         /**textfield delegate**/
         topText.delegate = self
         bottomText.delegate = self
+    }
+    
+    func initTextField(item: UITextField)  {
+        item.defaultTextAttributes = memeTextAttributes
+        item.delegate = self
+        item.textAlignment = .Center
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -64,17 +68,14 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func pickImageViewFromAlbum(sender: UIBarButtonItem) {
+    @IBAction func pickImageView(sender: UIBarButtonItem) {
         let controller = UIImagePickerController()
         controller.delegate = self
-        controller.sourceType = .PhotoLibrary
-        self.presentViewController(controller, animated: true, completion: nil)
-    }
-    
-    @IBAction func pickImageViewFromCamera(sender: UIBarButtonItem) {
-        let controller = UIImagePickerController()
-        controller.delegate = self
-        controller.sourceType = .Camera
+        if sender.tag == 1 {
+            controller.sourceType = .PhotoLibrary
+        }else {
+            controller.sourceType = .Camera
+        }
         self.presentViewController(controller, animated: true, completion: nil)
     }
     
@@ -86,15 +87,22 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
     @IBAction func shareMemeView()  {
-        saveMeme()
         let controller = UIActivityViewController(activityItems: [currentMeme.memedImage], applicationActivities: nil)
-        
         presentViewController(controller, animated: true, completion: nil)
+        controller.completionWithItemsHandler = { (activity, success, items, error) in
+            if(success){
+                self.saveMeme()
+            }
+            controller.dismissViewControllerAnimated(true, completion: nil)
+        }
+      
     }
     
     //MARK: textfieldDelegate
     func textFieldDidBeginEditing(textField: UITextField) {
-        textField.text = ""
+        if (textField.text == "BOTTOM" || textField.text == "TOP"){
+            textField.text = ""
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -123,11 +131,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //MARK: Lift && Resume View Position
     func keyboardWillShow(notification:NSNotification)  {
-        self.view.frame.origin.y -= getKeyboardHeight(notification)
+        self.view.frame.origin.y = getKeyboardHeight(notification) * -1
     }
     
     func keyboardWillDismiss(notification:NSNotification)  {
-        self.view.frame.origin.y += getKeyboardHeight(notification)
+        self.view.frame.origin.y = 0
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {

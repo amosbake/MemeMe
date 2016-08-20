@@ -22,21 +22,21 @@
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem width="50" style="plain" systemItem="fixedSpace" id="z9G-QJ-kIo"/>
-                                    <barButtonItem title="Pick" id="BWm-he-Uvo">
+                                    <barButtonItem tag="1" title="Pick" id="BWm-he-Uvo">
                                         <connections>
-                                            <action selector="pickImageViewFromAlbum:" destination="BYZ-38-t0r" id="TfM-Wp-NO9"/>
+                                            <action selector="pickImageView:" destination="BYZ-38-t0r" id="SmX-qZ-8MB"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="w3w-HG-wEp"/>
-                                    <barButtonItem title="Camera" id="joc-rB-FKX">
+                                    <barButtonItem tag="2" systemItem="camera" id="joc-rB-FKX">
                                         <connections>
-                                            <action selector="pickImageViewFromCamera:" destination="BYZ-38-t0r" id="ulE-lD-Fcr"/>
+                                            <action selector="pickImageView:" destination="BYZ-38-t0r" id="3z9-F5-l0U"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="50" style="plain" systemItem="fixedSpace" id="oRB-rL-opQ"/>
                                 </items>
                             </toolbar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u9a-dz-h6O">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u9a-dz-h6O">
                                 <rect key="frame" x="100" y="79" width="400" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="400" id="0xa-3B-sO1"/>
@@ -46,7 +46,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SnT-fs-7im">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SnT-fs-7im">
                                 <rect key="frame" x="100" y="478" width="400" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="5r9-vT-3Vd"/>
@@ -59,7 +59,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNi-va-B6d">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Share" id="DqP-Ud-CMf">
+                                    <barButtonItem systemItem="action" id="DqP-Ud-CMf">
                                         <connections>
                                             <action selector="shareMemeView" destination="BYZ-38-t0r" id="vxS-fK-O5i"/>
                                         </connections>
@@ -72,18 +72,11 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aWY-95-ICh">
-                                <rect key="frame" x="50" y="64" width="500" height="511"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aWY-95-ICh">
+                                <rect key="frame" x="50" y="64" width="500" height="492"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="450" id="HPX-7r-cbp"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="500" id="cHC-JP-bPB"/>
                                     <constraint firstAttribute="width" constant="500" id="vvT-Px-ygM"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="HPX-7r-cbp"/>
-                                    </mask>
-                                </variation>
                             </imageView>
                         </subviews>
                         <constraints>
@@ -102,6 +95,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8VZ-8z-BCU" secondAttribute="bottom" id="aGz-Cb-fGQ"/>
                             <constraint firstItem="8VZ-8z-BCU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="cJA-fS-Tcj"/>
                             <constraint firstItem="aWY-95-ICh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ePN-o4-Tla"/>
+                            <constraint firstItem="8VZ-8z-BCU" firstAttribute="top" secondItem="aWY-95-ICh" secondAttribute="bottom" id="fZZ-Kc-PV8"/>
                             <constraint firstItem="JNi-va-B6d" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="fi4-eG-Yui"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="aWY-95-ICh" secondAttribute="bottom" constant="25" id="lfF-PS-IhH"/>
                             <constraint firstItem="8VZ-8z-BCU" firstAttribute="top" secondItem="aWY-95-ICh" secondAttribute="bottom" constant="16" id="or6-tE-JVS"/>
@@ -113,6 +107,7 @@
                                 <exclude reference="aAj-sy-NsS"/>
                                 <exclude reference="Fs1-sm-MRh"/>
                                 <exclude reference="or6-tE-JVS"/>
+                                <exclude reference="lfF-PS-IhH"/>
                             </mask>
                         </variation>
                     </view>
