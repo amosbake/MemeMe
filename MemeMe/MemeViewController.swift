@@ -158,6 +158,7 @@ class MemeViewController: UIViewController,UIImagePickerControllerDelegate,UINav
     
     func saveMeme(memeImage :UIImage) {
         currentMeme = Meme(topText: topText.text!, bottomText: bottomText.text!, image: phoneImageView.image!, memedImage: memeImage )
+        (UIApplication.sharedApplication().delegate as! AppDelegate).meme.append(currentMeme)
     }
     
 }
