@@ -28,6 +28,7 @@ class MemeCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("collction count:\(memes.count)")
         return memes.count
     }
     
