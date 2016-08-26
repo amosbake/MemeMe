@@ -15,6 +15,7 @@ class MemeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.leftBarButtonItem = self.editButtonItem()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -23,8 +24,6 @@ class MemeTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        print("table count:\(memes.count)")
         return memes.count
     }
     
@@ -40,6 +39,34 @@ class MemeTableViewController: UITableViewController {
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("detailViewController") as! MemeDetailViewController
         controller.meme = memes[indexPath.row]
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    
+    //MARK: delete row
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            print("row \(indexPath.row)")
+            (UIApplication.sharedApplication().delegate as! AppDelegate).deleteMemeAtIndex(indexPath.row)
+            tableView.reloadData()
+        }
+    }
+    
+    
+    //MARK: rearrange tableview
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        if sourceIndexPath != destinationIndexPath {
+            let meme = memes[sourceIndexPath.row]
+            (UIApplication.sharedApplication().delegate as! AppDelegate).deleteMemeAtIndex(sourceIndexPath.row)
+            (UIApplication.sharedApplication().delegate as! AppDelegate).insertMemeAtIndex(meme, index: destinationIndexPath.row)
+        }
     }
     
 }

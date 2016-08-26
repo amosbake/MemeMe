@@ -13,6 +13,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var meme = [Meme]()
+    
+    func deleteMemeAtIndex(index: Int)  {
+        meme.removeAtIndex(index)
+    }
+    
+    func insertMemeAtIndex(newMeme: Meme,index: Int)  {
+        if index > meme.count {
+            meme.append(newMeme)
+        }else {
+            meme.insert(newMeme, atIndex: index)
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
