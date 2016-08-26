@@ -235,6 +235,9 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JCq-oz-jbz">
                                             <rect key="frame" x="8" y="-1" width="110" height="107"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="110" id="vQs-W9-srQ"/>
+                                            </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lML-ow-U1u">
                                             <rect key="frame" x="124" y="32" width="476" height="42"/>
@@ -244,6 +247,11 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="9vn-T7-52t"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -252,12 +260,14 @@
                                         <constraint firstItem="lML-ow-U1u" firstAttribute="leading" secondItem="JCq-oz-jbz" secondAttribute="trailing" constant="8" symbolic="YES" id="V8Z-n2-p8g"/>
                                         <constraint firstItem="JCq-oz-jbz" firstAttribute="top" secondItem="xMh-ON-fys" secondAttribute="top" constant="-1" id="VMa-qq-dvS"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="lML-ow-U1u" secondAttribute="bottom" constant="32.5" id="Xrf-2J-CT8"/>
+                                        <constraint firstItem="lML-ow-U1u" firstAttribute="leading" secondItem="JCq-oz-jbz" secondAttribute="trailing" constant="6" id="aPJ-Wp-edX"/>
                                         <constraint firstItem="lML-ow-U1u" firstAttribute="trailing" secondItem="xMh-ON-fys" secondAttribute="trailingMargin" constant="8" id="eA4-Tf-KWW"/>
                                         <constraint firstItem="lML-ow-U1u" firstAttribute="top" secondItem="xMh-ON-fys" secondAttribute="topMargin" constant="24" id="enT-xM-atB"/>
                                         <constraint firstItem="JCq-oz-jbz" firstAttribute="leading" secondItem="xMh-ON-fys" secondAttribute="leadingMargin" id="lfA-cc-b6k"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="7Ev-Zj-b1X"/>
                                             <exclude reference="V8Z-n2-p8g"/>
                                         </mask>
                                     </variation>
