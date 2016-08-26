@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  MemeMe
+//
+//  MemeMeViewController.swift
 //
 //  Created by Mopel on 16/8/18.
 //  Copyright © 2016年 Mopel. All rights reserved.
@@ -10,6 +10,7 @@ import UIKit
 
 class MemeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
     @IBOutlet weak var bottomBar: UIToolbar!
+    @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var phoneImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var topText: UITextField!
@@ -78,6 +79,7 @@ class MemeViewController: UIViewController,UIImagePickerControllerDelegate,UINav
         bottomText.text = "BOTTOM"
         phoneImageView.image = nil
         shareButton.enabled = false
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func shareMemeView()  {
@@ -87,6 +89,7 @@ class MemeViewController: UIViewController,UIImagePickerControllerDelegate,UINav
         controller.completionWithItemsHandler = { (activity, success, items, error) in
             if(success){
                 self.saveMeme(memeImage)
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
             controller.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -146,6 +149,8 @@ class MemeViewController: UIViewController,UIImagePickerControllerDelegate,UINav
     //MARK: Meme save & share
     func generateMemedImage() -> UIImage {
         bottomBar.hidden = true
+        topToolBar.hidden = true
+        
         
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
@@ -153,6 +158,7 @@ class MemeViewController: UIViewController,UIImagePickerControllerDelegate,UINav
         UIGraphicsEndImageContext()
         
         bottomBar.hidden = false
+        topToolBar.hidden = false
         return memedImage
     }
     
